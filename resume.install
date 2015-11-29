@@ -1,0 +1,129 @@
+<?php
+
+	function resume_schema(){
+		$schema = array();
+		$schema['resume_main'] = array(
+		  'description' => t('Resume main table'),
+		  'fields' => array(
+		    'id' => array(
+		      'description' => t('My unique identifier'),
+		      'type' => 'serial',
+		      'unsigned' => true,
+		      'not null' => true,
+		    ),
+		    'image_id' => array(
+		      'description' => t('Resume Image id'),
+		      'type' => 'int',
+		      'unsigned' => true,
+		    ),
+		    'about_me' => array(
+		      'description' => t('About me field'),
+		      'type' => 'text',
+		    ),
+		    'introduction' => array(
+		      'description' => t('Small Introduction'),
+		      'type' => 'text',
+		    ),
+		    'contact_me' => array(
+		      'description' => t('Contact me field'),
+		      'type' => 'varchar',
+					'length' => 255,
+					'default' => ''
+		    ),
+		    'skype_id' => array(
+		      'description' => t('Skype id field'),
+		      'type' => 'varchar',
+					'length' => 255,
+					'default' => ''
+		    ),
+		    'created_at' => array(
+		      'description' => t('Created at datetime'),
+			    'mysql_type' => 'datetime',
+		    ),
+		    'updated_at' => array(
+		      'description' => t('Updated at datetime'),
+			    'mysql_type' => 'datetime',
+		    ),
+		  ),
+		  'primary key' => array('id'),
+		);
+
+		$schema['resume_subforms'] = array(
+		  'description' => t('Resume main table'),
+		  'fields' => array(
+		    'id' => array(
+		      'description' => t('My unique identifier'),
+		      'type' => 'serial',
+		      'unsigned' => true,
+		      'not null' => true,
+		    ),
+		    'resume_main_id' => array(
+		      'description' => t('Foreign key with resume_main table'),
+		      'type' => 'int',
+		      'unsigned' => true,
+		      'not null' => true,
+		    ),
+		    'form_name' => array(
+		      'description' => t('Form name'),
+		      'type' => 'varchar',
+					'length' => 100,
+					'default' => ''
+		    ),
+		    'field_name' => array(
+		      'description' => t('Field name'),
+		      'type' => 'varchar',
+					'length' => 255,
+					'default' => ''
+		    ),
+		    'field_value' => array(
+		      'description' => t('Field value'),
+		      'type' => 'text',
+		    ),
+		    'position' => array(
+		      'description' => t('Position the current field is set'),
+		      'type' => 'int',
+		      'unsigned' => true,
+		    ),
+		    'created_at' => array(
+		      'description' => t('Created at datetime'),
+			    'mysql_type' => 'datetime',
+		    ),
+		    'updated_at' => array(
+		      'description' => t('Updated at datetime'),
+			    'mysql_type' => 'datetime',
+		    ),
+		  ),
+		  'primary key' => array('id'),
+			'foreign keys' => array(
+		    'resume_main_id' => array(
+		      'table' => 'resume_main',
+		      'columns' => array('resume_main_id' => 'id'),
+	    	),
+    	),
+		);
+
+		return $schema;  
+	}
+
+	/**
+	 * Implements hook_install().
+	 */
+	function resume_install() {
+		db_query('
+		  ALTER TABLE {resume_subforms}
+		  ADD CONSTRAINT fk_resume_main_id
+			FOREIGN KEY (resume_main_id) 
+			REFERENCES {resume_main} (id)
+		');
+	}
+
+	/**
+	 * Implements hook_uninstall().
+	 */
+	function resume_uninstall() {
+		db_query('
+		  ALTER TABLE {resume_subforms}
+		  DROP FOREIGN KEY fk_resume_main_id
+		');
+	}
+?>

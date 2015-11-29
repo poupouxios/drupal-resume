@@ -1,0 +1,48 @@
+<?php
+
+	function resume_permission() {
+
+		return array(
+		  'administer_resume' => array(
+		    'title'       => t('Administer Resume'),
+		    'description' => t('Only the owner of the site must edit the resume.'),
+		  ),
+		);
+	}
+	
+	function resume_menu() {
+		$items = array();
+
+		$items['admin/structure/resume']           = array(
+		  'title' => 'Resume', //page title
+		  'description' => 'Setup Curriculum Vitae for the owner of the site',
+		  'page callback' => 'drupal_get_form', //this is the function that will be called when the page is accessed.  for a form, use drupal_get_form
+		  'page arguments' => array('resume_main_fields_form'), //put the name of the form here
+		  'access arguments' => array('administer_resume'),
+		  'type'             => MENU_NORMAL_ITEM,
+		  'file'             => 'resume.admin.inc',
+		);
+
+		$items['resume'] = array(
+			'title' => 'Resume',
+		  'page callback' => 'resume_render',
+			'access arguments' => array('access content'),
+		);
+
+		return $items;
+	}
+
+	function resume_theme() {
+		  return array(
+		      'resume_template' => array(
+		          'render element' => 'elements',
+		          'template' => 'template/resume',
+		      ),
+		  );
+	}
+
+	function resume_render(){
+		return theme('resume_template');
+	}
+
+?>

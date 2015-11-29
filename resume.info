@@ -1,0 +1,26 @@
+name = Resume Builder
+description = This module will generate a resume page with all the necessary information being setup from the module in the admin area.
+core = 7.x
+
+dependencies[] = date
+dependencies[] = date_api
+dependencies[] = views
+
+stylesheets[all][] = css/resume.css
+scripts[] = js/scripts.js
+
+files[] = include/helper/ImageHelper.php
+files[] = include/helper/ResumeSubformHelper.php
+files[] = include/model/ResumeBaseModel.php
+files[] = include/model/ResumeMainModel.php
+files[] = include/model/ResumeSubformModel.php
+files[] = include/model/ResumeHobbyModel.php
+files[] = include/model/ResumeEducationModel.php
+files[] = include/model/ResumeExperiencesModel.php
+files[] = include/model/ResumeLanguagesModel.php
+files[] = include/model/ResumeSkillsModel.php
+files[] = include/model/ResumeSocialMediaModel.php
+files[] = include/mapper/ResumeBaseMapper.php
+files[] = include/mapper/ResumeMainMapper.php
+files[] = include/mapper/ResumeSubformMapper.php
+
