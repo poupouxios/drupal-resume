@@ -23,21 +23,15 @@
 		  'file'             => 'resume.admin.inc',
 		);
 
-	 $items['resume_main'] = array(
+	 $items['resume'] = array(
 			'title'           => 'Resume',
 			'description'     => t('Resume'),
 			'menu_name'       => 'main-menu',
 			'weight'          => 8,
 			'access callback' => TRUE,
-			'page callback'   => 'drupal_goto',
-			'page arguments' => array('resume'),
-			'type' => MENU_NORMAL_ITEM,
-		);
-
-		$items['resume'] = array(
-			'title' => 'Resume',
-		  'page callback' => 'resume_render',
+			'page callback'   => 'resume_render',
 			'access arguments' => array('access content'),
+			'type' => MENU_NORMAL_ITEM,
 		);
 
 		return $items;
