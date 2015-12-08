@@ -43,17 +43,22 @@
 					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeEducationModel");
 								$educationData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					 ?>
-				  <ul id="education" class="clearfix">
-						<?php foreach($educationData as $education): ?>
-						  <li>
-						    <div class="year pull-left"><?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?></div>
-						    <div class="description pull-right">
-						      <h3><?= isset($education['title']) ? $education['title']->field_value : "" ?></h3>
-						      <p><?= isset($education['education_description']) ? $education['education_description']->field_value : "" ?></p>
+					 <ul class="timeline">
+						<?php foreach($educationData as $index => $education): ?>
+							<li class="<?= (($index != 0) && ($index % 2 != 0))? "timeline-inverted" : "" ?>">
+						    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record" rel="tooltip" title="<?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?>" id=""></i></a></div>
+						    <div class="timeline-panel">
+						      <div class="timeline-heading">
+						        <h3><?= isset($education['title']) ? $education['title']->field_value : "" ?></h3>
+										<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?></h5>
+						      </div>
+						      <div class="timeline-body">
+						        <p><?= isset($education['education_description']) ? $education['education_description']->field_value : "" ?></p>
+						      </div>
 						    </div>
 						  </li>
 						<?php endforeach; ?>
-				  </ul>
+					</ul>
 				<?php endif; ?>				
 		  </div>
 		  <div class="box">
@@ -62,18 +67,23 @@
 					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel");
 								$experiencesData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					?>
-					<?php foreach($experiencesData as $experience): ?>
-						<div class="job clearfix">
-						  <div class="col-xs-3">
-						    <div class="where"><?= isset($experience['company_name']) ? $experience['company_name']->field_value : "" ?></div>
-						    <div class="year"><?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : "" ?></div>
-						  </div>
-						  <div class="col-xs-9">
-						    <div class="profession"><?= isset($experience['position']) ? $experience['position']->field_value : "" ?></div>
-						    <div class="description"><?= isset($experience['position_description']) ? $experience['position_description']->field_value : "" ?></div>
-						  </div>
-						</div>
+					<ul class="timeline">
+					<?php foreach($experiencesData as $index => $experience): ?>
+							<li class="<?= (($index != 0) && ($index % 2 != 0))? "timeline-inverted" : "" ?>">
+						    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-home" rel="tooltip" title="<?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : "" ?>"></i></a></div>
+						    <div class="timeline-panel">
+						      <div class="timeline-heading">
+										<h3 class="position"><?= isset($experience['position']) ? $experience['position']->field_value : "" ?></h3>
+						        <h4 class="company"><?= isset($experience['company_name']) ? $experience['company_name']->field_value : "" ?></h4>
+										<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : "" ?></h5>
+						      </div>
+						      <div class="timeline-body">
+						        <p><?= isset($experience['position_description']) ? $experience['position_description']->field_value : "" ?></p>
+						      </div>
+						    </div>
+						  </li>
 					<?php endforeach; ?>
+					</ul>
 				<?php endif; ?>				
 		  </div>
 		  <div class="box clearfix">
