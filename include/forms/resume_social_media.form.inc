@@ -14,7 +14,7 @@
   		'#suffix' => '</div>',
 	  );
 
-		for ($i = 1; $i <= $form_state['num_social_media']; $i++) {
+		for ($i = 1; $i < $form_state['num_social_media']; $i++) {
 
 		  $form['social_media'][$i]['name'] = array(
 		    '#type' => 'textfield',
@@ -53,7 +53,7 @@ a simple logo will be set'),
 		// Adds "Add another name" button.
 		$form['social_media']['add_social_media'] = array(
 		  '#type' => 'submit',
-		  '#value' => t('Add another social media'),
+		  '#value' => t('Add social media'),
 		  '#submit' => array('resume_add_social_media'),
 	    '#limit_validation_errors' => array(array('social_media')),
 			'#ajax' => array(
@@ -65,7 +65,7 @@ a simple logo will be set'),
 		if ($form_state['num_social_media'] > 1) {
 		  $form['social_media']['remove_social_media'] = array(
 		    '#type' => 'submit',
-		    '#value' => t('Remove latest social media'),
+		    '#value' => t('Remove last social media'),
 		    '#submit' => array('resume_remove_social_media'),
 		    // Since we are removing a name, don't validate until later.
 		    '#limit_validation_errors' => array(),

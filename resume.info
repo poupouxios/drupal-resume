@@ -19,6 +19,7 @@ files[] = include/model/ResumeEducationModel.php
 files[] = include/model/ResumeExperiencesModel.php
 files[] = include/model/ResumeLanguagesModel.php
 files[] = include/model/ResumeSkillsModel.php
+files[] = include/model/ResumeAwardsModel.php
 files[] = include/model/ResumeSocialMediaModel.php
 files[] = include/mapper/ResumeBaseMapper.php
 files[] = include/mapper/ResumeMainMapper.php

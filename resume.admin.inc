@@ -6,6 +6,7 @@ module_load_include('inc', 'resume', 'include/forms/resume_experiences.form');
 module_load_include('inc', 'resume', 'include/forms/resume_skills.form');
 module_load_include('inc', 'resume', 'include/forms/resume_social_media.form');
 module_load_include('inc', 'resume', 'include/forms/resume_languages.form');
+module_load_include('inc', 'resume', 'include/forms/resume_awards.form');
 
 	function resume_main_fields_form($form, &$form_state) {
 		global $base_url;
@@ -78,6 +79,7 @@ you set. The URL is <a href="@base_url/resume">@base_url/resume</a>',array("@bas
 		$form = array_merge($form,resume_skills_form($form, $form_state,resume_get_dataset("ResumeSkillsModel")));
 		$form = array_merge($form,resume_social_media_form($form, $form_state,resume_get_dataset("ResumeSocialMediaModel")));
 		$form = array_merge($form,resume_languages_form($form, $form_state,resume_get_dataset("ResumeLanguagesModel")));
+		$form = array_merge($form,resume_awards_form($form, $form_state,resume_get_dataset("ResumeAwardsModel")));
 
 		$form['submit_button'] = array(
 		  '#type' => 'submit',

@@ -14,7 +14,7 @@
   		'#suffix' => '</div>',
 	  );
 
-		for ($i = 1; $i <= $form_state['num_languages']; $i++) {
+		for ($i = 1; $i < $form_state['num_languages']; $i++) {
 
 		  $form['languages'][$i]['name'] = array(
 		    '#type' => 'textfield',
@@ -40,7 +40,7 @@
 
 		$form['languages']['add_languages'] = array(
 		  '#type' => 'submit',
-		  '#value' => t('Add another language'),
+		  '#value' => t('Add language'),
 		  '#submit' => array('resume_add_languages'),
 	    '#limit_validation_errors' => array(array('languages')),
 			'#ajax' => array(
@@ -52,7 +52,7 @@
 		if ($form_state['num_languages'] > 1) {
 		  $form['languages']['remove_languages'] = array(
 		    '#type' => 'submit',
-		    '#value' => t('Remove latest language'),
+		    '#value' => t('Remove last language'),
 		    '#submit' => array('resume_remove_languages'),
 		    // Since we are removing a name, don't validate until later.
 		    '#limit_validation_errors' => array(),

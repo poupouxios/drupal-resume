@@ -14,7 +14,7 @@
   		'#suffix' => '</div>',
 	  );
 
-		for ($i = 1; $i <= $form_state['num_experiences']; $i++) {
+		for ($i = 1; $i < $form_state['num_experiences']; $i++) {
 
 		  $form['experiences'][$i]['company_name'] = array(
 		    '#type' => 'textfield',
@@ -34,13 +34,16 @@
 				'#default_value' => isset($dataSet[$i-1]) && isset($dataSet[$i-1]['position'])? $dataSet[$i-1]['position']->field_value: ""
 		  );
 
+			$position_description = isset($dataSet[$i-1]) && isset($dataSet[$i-1]['position_description']->field_value) ? unserialize($dataSet[$i-1]['position_description']->field_value) : null;
+
 		  $form['experiences'][$i]['position_description'] = array(
-		    '#type' => 'textarea',
+		    '#type' => 'text_format',
+				'#format'=> isset($position_description['format']) ? $position_description['format'] : 'full_html',
 		    '#title' => t('Description of position'),
 				'#cols' => 60, 
 			  '#rows' => 5,
 		    '#required' => FALSE,
-				'#default_value' => isset($dataSet[$i-1]) && isset($dataSet[$i-1]['position_description'])? $dataSet[$i-1]['position_description']->field_value: ""
+				'#default_value' => isset($position_description['value'])? $position_description['value']: ""
 		  );
 
 			$date_value = isset($dataSet[$i-1]) && isset($dataSet[$i-1]['experiences_start_date'])? $dataSet[$i-1]['experiences_start_date']->field_value: "";
@@ -61,6 +64,7 @@
 
 		  $form['experiences'][$i]['experiences_end_date'] = array(
 				'#type' => 'date_select',
+				'#description' => t('Leave empty and the system will set it to Current.'),
 				'#title' => t('Finished on'),
 				'#default_value' => strlen($date_value) > 1 ? $end_date->format('Y-m') : "",
 				'#date_format' => 'Y-m',
@@ -74,7 +78,7 @@
 		// Adds "Add another name" button.
 		$form['experiences']['add_experiences'] = array(
 		  '#type' => 'submit',
-		  '#value' => t('Add another experience'),
+		  '#value' => t('Add experience'),
 		  '#submit' => array('resume_add_experiences'),
 	    '#limit_validation_errors' => array(array('experiences')),
 			'#ajax' => array(
@@ -86,7 +90,7 @@
 		if ($form_state['num_experiences'] > 1) {
 		  $form['experiences']['remove_experiences'] = array(
 		    '#type' => 'submit',
-		    '#value' => t('Remove latest experience'),
+		    '#value' => t('Remove last experience'),
 		    '#submit' => array('resume_remove_experiences'),
 		    // Since we are removing a name, don't validate until later.
 		    '#limit_validation_errors' => array(),

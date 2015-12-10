@@ -15,7 +15,7 @@
   		'#suffix' => '</div>',
 	  );
 
-		for ($i = 1; $i <= $form_state['num_hobbies']; $i++) {
+		for ($i = 1; $i < $form_state['num_hobbies']; $i++) {
 
 		  $form['hobby'][$i]['name'] = array(
 		    '#type' => 'textfield',
@@ -31,7 +31,7 @@
 		// Adds "Add another name" button.
 		$form['hobby']['add_hobby'] = array(
 		  '#type' => 'submit',
-		  '#value' => t('Add another hobby'),
+		  '#value' => t('Add hobby'),
 		  '#submit' => array('resume_add_hobby'),
 	    '#limit_validation_errors' => array(array('hobby')),
 			'#ajax' => array(
@@ -43,7 +43,7 @@
 		if ($form_state['num_hobbies'] > 1) {
 		  $form['hobby']['remove_hobby'] = array(
 		    '#type' => 'submit',
-		    '#value' => t('Remove latest hobby'),
+		    '#value' => t('Remove last hobby'),
 		    '#submit' => array('resume_remove_hobby'),
 		    // Since we are removing a name, don't validate until later.
 		    '#limit_validation_errors' => array(),

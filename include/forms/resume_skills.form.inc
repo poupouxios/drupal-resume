@@ -14,7 +14,7 @@
   		'#suffix' => '</div>',
 	  );
 
-		for ($i = 1; $i <= $form_state['num_skills']; $i++) {
+		for ($i = 1; $i < $form_state['num_skills']; $i++) {
 
 		  $form['skills'][$i]['name'] = array(
 		    '#type' => 'textfield',

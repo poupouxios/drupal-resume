@@ -37,55 +37,6 @@
 		      <?= $aboutMe['value'] ?>
 				<?php endif; ?>
 		  </div>
-		  <div class="box">
-				<?php if($resumeMainModel): ?>
-					<h2>Education</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeEducationModel");
-								$educationData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
-					 ?>
-					 <ul class="timeline">
-						<?php foreach($educationData as $index => $education): ?>
-							<li class="<?= (($index != 0) && ($index % 2 != 0))? "timeline-inverted" : "" ?>">
-						    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record" rel="tooltip" title="<?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?>" id=""></i></a></div>
-						    <div class="timeline-panel">
-						      <div class="timeline-heading">
-						        <h3><?= isset($education['title']) ? $education['title']->field_value : "" ?></h3>
-										<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?></h5>
-						      </div>
-						      <div class="timeline-body">
-						        <p><?= isset($education['education_description']) ? $education['education_description']->field_value : "" ?></p>
-						      </div>
-						    </div>
-						  </li>
-						<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>				
-		  </div>
-		  <div class="box">
-				<?php if($resumeMainModel): ?>
-					<h2>Experiences</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel");
-								$experiencesData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
-					?>
-					<ul class="timeline">
-					<?php foreach($experiencesData as $index => $experience): ?>
-							<li class="<?= (($index != 0) && ($index % 2 != 0))? "timeline-inverted" : "" ?>">
-						    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-home" rel="tooltip" title="<?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : "" ?>"></i></a></div>
-						    <div class="timeline-panel">
-						      <div class="timeline-heading">
-										<h3 class="position"><?= isset($experience['position']) ? $experience['position']->field_value : "" ?></h3>
-						        <h4 class="company"><?= isset($experience['company_name']) ? $experience['company_name']->field_value : "" ?></h4>
-										<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : "" ?></h5>
-						      </div>
-						      <div class="timeline-body">
-						        <p><?= isset($experience['position_description']) ? $experience['position_description']->field_value : "" ?></p>
-						      </div>
-						    </div>
-						  </li>
-					<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>				
-		  </div>
 		  <div class="box clearfix">
 		    <h2>Contact</h2>
 				<?php if($resumeMainModel && strlen($resumeMainModel->contact_me) > 0): ?>
@@ -109,10 +60,71 @@
 						<div class="contact-item">
 						  <div class="icon pull-left text-center"><span class="fa <?= $socialMedia['class_name']->field_value ?> fa-fw"></span></div>
 							<div class="title pull-right"><?= $socialMedia['name']->field_value ?></div>
-						  <div class="description pull-right"><?= $socialMedia['url']->field_value ?></div>
+						  <div class="description pull-right"><?= filter_var($socialMedia['url']->field_value,FILTER_VALIDATE_URL) === FALSE ? $socialMedia['url']->field_value : "<a href='".$socialMedia['url']->field_value."'>".$socialMedia['url']->field_value."</a>" ?></div>
 						</div>
 					<?php endforeach; ?>
 				<?php endif; ?>
+		  </div>
+		  <div class="box">
+				<?php if($resumeMainModel): ?>
+					<h2>Experiences</h2>
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel");
+								$experiencesData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
+					?>
+					<ul class="timeline">
+					<?php foreach($experiencesData as $index => $experience): ?>
+							<li class="<?= (($index != 0) && ($index % 2 != 0))? "timeline-inverted" : "" ?>">
+						    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-home" rel="tooltip" title="<?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : " - Current" ?>"></i></a></div>
+						    <div class="timeline-panel">
+						      <div class="timeline-heading">
+										<h3 class="position"><?= isset($experience['position']) ? $experience['position']->field_value : "" ?></h3>
+						        <h4 class="company"><?= isset($experience['company_name']) ? $experience['company_name']->field_value : "" ?></h4>
+										<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($experience['experiences_start_date']) ? ResumeSubformHelper::getProperDate($experience['experiences_start_date']->field_value) : "" ?> <?= isset($experience['experiences_end_date']) ? " - ".ResumeSubformHelper::getProperDate($experience['experiences_end_date']->field_value) : " - Current" ?></h5>
+						      </div>
+						      <div class="timeline-body">
+						        <p><?php
+												$description = isset($experience['position_description']) ? unserialize($experience['position_description']->field_value) : null;
+												if($description){
+													echo $description['value'];
+												} 
+											?>
+										</p>
+						      </div>
+						    </div>
+						  </li>
+					<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>				
+		  </div>
+		  <div class="box clearfix">
+				<?php if($resumeMainModel): ?>
+					<h2>Education</h2>
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeEducationModel");
+								$educationData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
+					 ?>
+					 <ul class="timeline">
+						<?php foreach($educationData as $index => $education): ?>
+							<li class="<?= (($index != 0) && ($index % 2 != 0))? "timeline-inverted" : "" ?>">
+						    <div class="timeline-badge primary"><a><i class="glyphicon glyphicon-record" rel="tooltip" title="<?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?> <?= isset($education['education_end_date']) ? " - ".ResumeSubformHelper::getProperDate($education['education_end_date']->field_value) : "" ?>" id=""></i></a></div>
+						    <div class="timeline-panel">
+						      <div class="timeline-heading">
+						        <h3><?= isset($education['title']) ? $education['title']->field_value : "" ?></h3>
+										<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($education['education_start_date']) ?  ResumeSubformHelper::getProperDate($education['education_start_date']->field_value) : "" ?> <?= isset($education['education_end_date']) ? " - ".ResumeSubformHelper::getProperDate($education['education_end_date']->field_value) : "" ?></h5>
+						      </div>
+						      <div class="timeline-body">
+						        <p><?php
+												$description = isset($education['education_description']) ? unserialize($education['education_description']->field_value) : null;
+												if($description){
+													echo $description['value'];
+												} 
+											?>
+										</p>
+						      </div>
+						    </div>
+						  </li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>				
 		  </div>
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
@@ -120,9 +132,17 @@
 				  <div class="skills">
 						<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeSkillsModel");
 									$skillsData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
+									$sortedSkills = [];
+									foreach($skillsData as $skill){
+										$skill_value = intval($skill['skill_value']->field_value);
+										$sortedSkills[$skill_value][] = $skill;
+									}
+									krsort($sortedSkills);
 						?>
-						<?php foreach($skillsData as $skill): ?>
-					    <div class="item-skills" data-percent="<?= intval($skill['skill_value']->field_value) / 100 ?>"><?= $skill['name']->field_value ?></div>
+						<?php foreach($sortedSkills as $skill_value => $skills): ?>
+							<?php foreach($skills as $skill): ?>
+							   <div class="item-skills" data-percent="<?= intval($skill_value) / 100 ?>"><?= $skill['name']->field_value ?></div>
+							<?php endforeach; ?>
 						<?php endforeach; ?>
 				    <div class="skills-legend clearfix">
 				      <div class="legend-left legend">Beginner</div>
@@ -154,6 +174,28 @@
 					?>
 					<?php foreach($hobbyData as $hobby): ?>
 				  	<div class="hobby"><?= $hobby['name']->field_value ?></div>
+					<?php endforeach; ?>
+				<?php endif; ?>
+		  </div>
+		  <div class="box">
+				<?php if($resumeMainModel): ?>
+				  <h2>Awards</h2>
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeAwardsModel");
+								$awardsData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
+					?>
+					<?php foreach($awardsData as $award): ?>
+						<div class="award">
+							<h3><?= $award['title']->field_value ?></h3>
+							<h5><i class="glyphicon glyphicon-calendar"></i> <?= isset($award['awards_date']) ?  ResumeSubformHelper::getProperDate($award['awards_date']->field_value) : "" ?></h5>
+							<div class="award-description">
+								<?php
+									$description = isset($award['awards_description']) ? unserialize($award['awards_description']->field_value) : null;
+									if($description){
+										echo $description['value'];
+									} 
+								?>
+							</div>
+						</div>
 					<?php endforeach; ?>
 				<?php endif; ?>
 		  </div>
