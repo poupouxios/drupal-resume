@@ -24,6 +24,13 @@ module_load_include('inc', 'resume', 'include/forms/resume_awards.form');
 you set. The URL is <a href="@base_url/resume">@base_url/resume</a>',array("@base_url" => $base_url)),
 		);
 
+		$form['header_title'] = array(
+        '#title' => 'Header Title',
+        '#type' => 'textfield',
+        '#required' => TRUE,
+				'#default_value' => isset($data->header_title) ? $data->header_title : ""
+    );
+
 		$form['resume_image'] = array(
 			'#title' => t('Profile Image'),
 			'#type' => 'managed_file',

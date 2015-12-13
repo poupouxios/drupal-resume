@@ -13,6 +13,12 @@
 	function resume_menu() {
 		$items = array();
 
+		$dataModels = ResumeMainModel::getMapper()->findAll();
+		$resumeMainData = null;
+		if(count($dataModels) > 0){
+			$resumeMainData = $dataModels[0];
+		}
+
 		$items['admin/structure/resume']           = array(
 		  'title' => 'Resume', //page title
 		  'description' => 'Setup Curriculum Vitae for the owner of the site',
@@ -24,8 +30,8 @@
 		);
 
 	 $items['resume'] = array(
-			'title'           => 'Resume',
-			'description'     => t('Resume'),
+			'title'           => isset($resumeMainData->header_title)? t($resumeMainData->header_title) : t('Resume'),
+			'description'     => isset($resumeMainData->header_title)? t($resumeMainData->header_title) : t('Resume'),
 			'menu_name'       => 'main-menu',
 			'weight'          => 8,
 			'access callback' => TRUE,

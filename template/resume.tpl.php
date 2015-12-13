@@ -5,7 +5,15 @@
 		$resumeMainModel = $dataSet[0];
 	}
 ?>
-
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="resume-header-title">
+		<?php if($resumeMainModel): ?>
+			<?= $resumeMainModel->header_title ?>
+		<?php endif; ?>
+		</h1>
+	</div>
+</div>
 <div id="resume">
 	<div class="row">
 		<div class="col-xs-12">

@@ -11,6 +11,12 @@
 		      'unsigned' => true,
 		      'not null' => true,
 		    ),
+		    'header_title' => array(
+		      'description' => t('Header Title field'),
+		      'type' => 'varchar',
+					'length' => 255,
+					'default' => ''
+		    ),	
 		    'image_id' => array(
 		      'description' => t('Resume Image id'),
 		      'type' => 'int',
