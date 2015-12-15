@@ -23,18 +23,20 @@
 			return $dataModels;
 		}
 
-		public function findAllBy($field,$value){
-			$dataSet = db_select($this->tableName,"a")
-				->fields("a")
-				->condition($field,$value)
-				->execute()->fetchAll(PDO::FETCH_ASSOC);
+		public function findAllBy($field,$value,$sortField = "",$order = "ASC"){
+			$query = db_select($this->tableName,"a");
+			$query->fields("a")
+						->condition($field,$value);
+			if(strlen($sortField) > 1){
+				$query->orderBy($sortField,$order);
+			}
+			$dataSet = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
 			$called_class = str_replace("Mapper","Model",get_called_class());
 			$dataModels = array();
 			foreach($dataSet as $data){
 				$dataModels[] = $called_class::createObject($data);
 			}
 			return $dataModels;
-
 		}
 
 		public function save(){

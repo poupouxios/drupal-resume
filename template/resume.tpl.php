@@ -61,7 +61,7 @@
 				  </div>
 				<?php endif; ?>
 				<?php if($resumeMainModel): ?>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeSocialMediaModel");
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeSocialMediaModel","position");
 								$socialMediaData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					?>
 					<?php foreach($socialMediaData as $socialMedia): ?>
@@ -76,7 +76,7 @@
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
 					<h2>Experiences</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel");
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel","position");
 								$experiencesData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					?>
 					<ul class="timeline">
@@ -107,7 +107,7 @@
 		  <div class="box clearfix">
 				<?php if($resumeMainModel): ?>
 					<h2>Education</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeEducationModel");
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeEducationModel","position");
 								$educationData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					 ?>
 					 <ul class="timeline">
@@ -138,7 +138,7 @@
 				<?php if($resumeMainModel): ?>
 				  <h2>Skills</h2>
 				  <div class="skills">
-						<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeSkillsModel");
+						<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeSkillsModel","position");
 									$skillsData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 									$sortedSkills = [];
 									foreach($skillsData as $skill){
@@ -164,7 +164,7 @@
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
 				  <h2>Languages</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeLanguagesModel");
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeLanguagesModel","position");
 								$languageData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					?>
 				  <div id="language-skills">
@@ -177,7 +177,7 @@
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
 				  <h2>Hobbies</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeHobbyModel");
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeHobbyModel","position");
 								$hobbyData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					?>
 					<?php foreach($hobbyData as $hobby): ?>
@@ -188,7 +188,7 @@
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
 				  <h2>Awards</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeAwardsModel");
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeAwardsModel","position");
 								$awardsData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
 					?>
 					<?php foreach($awardsData as $award): ?>
