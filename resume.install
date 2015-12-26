@@ -16,9 +16,14 @@
 		      'type' => 'varchar',
 					'length' => 255,
 					'default' => ''
-		    ),	
+		    ),
 		    'image_id' => array(
 		      'description' => t('Resume Image id'),
+		      'type' => 'int',
+		      'unsigned' => true,
+		    ),
+		    'cv_file_id' => array(
+		      'description' => t('CV File id'),
 		      'type' => 'int',
 		      'unsigned' => true,
 		    ),
@@ -131,5 +136,18 @@
 		  ALTER TABLE {resume_subforms}
 		  DROP FOREIGN KEY fk_resume_main_id
 		');
+	}
+
+
+	/**
+	 * Add cv_file_id to upload your own CV
+	 */
+	function resume_update_7100() {
+		$spec = array(
+		  'description' => t('CV File id'),
+		  'type' => 'int',
+		  'unsigned' => true,
+		); 
+		db_add_field( 'resume_main', 'cv_file_id', $spec);
 	}
 ?>

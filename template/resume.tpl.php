@@ -13,6 +13,14 @@
 		<?php endif; ?>
 		</h1>
 	</div>
+	<?php if($resumeMainModel): ?>
+		<?php $cvFile = file_load($resumeMainModel->cv_file_id);?>
+		<?php if($cvFile): ?>
+			<div class="col-sm-12 my-cv">
+				<a class="btn btn-info" href="<?= file_create_url($cvFile->uri) ?>" title="Download my CV"><span class="glyphicon glyphicon-download-alt"></span>  Download my CV</a>
+			</div>
+		<?php endif; ?>
+	<?php endif; ?>
 </div>
 <div id="resume">
 	<div class="row">

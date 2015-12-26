@@ -5,6 +5,7 @@
 			"id" => 0,
 			"header_title" => "",
 			"image_id" => null,
+			"cv_file_id" => null,
 			"about_me" => "",
 			"introduction" => "",
 			"contact_me" => "",

@@ -8,6 +8,12 @@
   font-size: 0.9em;
 }
 
+.my-cv{
+	text-align:center;
+	margin-bottom:40px;
+	margin-top:-20px;
+}
+
 #photo-header{
   margin-top: 0px;
 	background-color:#f1f1f1;

@@ -34,9 +34,23 @@ you set. The URL is <a href="@base_url/resume">@base_url/resume</a>',array("@bas
 		$form['resume_image'] = array(
 			'#title' => t('Profile Image'),
 			'#type' => 'managed_file',
-			'#description' => t('Upload a small profile image size of 100x100.'),
+			'#description' => t('Upload a small profile image size of 100x100. Supported formats are png,jpg,jpeg.'),
 			'#upload_location' => 'public://',
-			'#default_value' => isset($data->image_id) ? $data->image_id : null
+			'#default_value' => isset($data->image_id) ? $data->image_id : null,
+			'#upload_validators' => array(
+		    'file_validate_extensions' => array('png jpg jpeg')
+			)
+		);
+
+		$form['resume_cv_file'] = array(
+			'#title' => t('Upload your CV'),
+			'#type' => 'managed_file',
+			'#description' => t('Upload your CV in pdf format. Supported formats are pdf,doc,docx.'),
+			'#upload_location' => 'public://',
+			'#default_value' => isset($data->cv_file_id) ? $data->cv_file_id : null,
+			'#upload_validators' => array(
+		    'file_validate_extensions' => array('pdf doc docx')
+			)
 		);
 
 		$introduction = isset($data->introduction) ? unserialize($data->introduction) : null;
@@ -103,14 +117,18 @@ you set. The URL is <a href="@base_url/resume">@base_url/resume</a>',array("@bas
 
 	function resume_main_fields_form_submit($form, &$form_state) {
 
-		$file = ImageHelper::handleImageFile($form['resume_image']['#default_value'],
+		$file = ImageHelper::handleFile($form['resume_image']['#default_value'],
 $form_state['values']['resume_image'],"resume","resume_file");
+
+		$cv_file = ImageHelper::handleFile($form['resume_cv_file']['#default_value'],
+$form_state['values']['resume_cv_file'],"resume","resume_cv_pdf_file");
 
 		$dataModels = ResumeMainModel::getMapper()->findAll();
 
 		if(count($dataModels) == 0){
 			$resumeMain = ResumeMainModel::createObject($form_state['values']);
-			$resumeMain->image_id = isset($file) ? $file->fid : null;
+			$resumeMain->image_id = isset($cv_file) ? $cv_file->fid : null;
+			$resumeMain->cv_file_id = isset($cv_file) ? $cv_file->fid : null;
 			$resumeMainId = $resumeMain::getMapper()->setModel($resumeMain)->save();
 			resume_set_subforms($form_state,$resumeMainId);
 	    drupal_set_message("Your profile has been created. Visit the resume front page to view your changes."); 
@@ -118,6 +136,7 @@ $form_state['values']['resume_image'],"resume","resume_file");
 			$resumeMain = $dataModels[0];
 			$resumeMain->updateFields($form_state['values']);
 			$resumeMain->image_id = isset($file) ? $file->fid : null;
+			$resumeMain->cv_file_id = isset($cv_file) ? $cv_file->fid : null;
 			$resumeMain::getMapper()->setModel($resumeMain)->save();
 			resume_set_subforms($form_state,$resumeMain->id);
 	    drupal_set_message("Your profile has been updated. Visit the resume front page to view your changes."); 

@@ -1,6 +1,7 @@
 name = Resume Builder
 description = This module will generate a resume page with all the necessary information being setup from the module in the admin area.
 core = 7.x
+version = 7.x-1.0
 
 dependencies[] = date
 dependencies[] = date_api
