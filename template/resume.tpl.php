@@ -88,8 +88,8 @@
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
 					<h2>Experiences</h2>
-					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel","position");
-								$experiencesData = ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet);
+					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel","field_value",'desc');
+								$experiencesData = array_reverse(ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet));
 					?>
 					<ul class="timeline">
 					<?php foreach($experiencesData as $index => $experience): ?>
@@ -106,7 +106,7 @@
 												$description = isset($experience['position_description']) ? unserialize($experience['position_description']->field_value) : null;
 												if($description){
 													echo $description['value'];
-												} 
+												}
 											?>
 										</p>
 						      </div>
@@ -114,7 +114,7 @@
 						  </li>
 					<?php endforeach; ?>
 					</ul>
-				<?php endif; ?>				
+				<?php endif; ?>
 		  </div>
 		  <div class="box clearfix">
 				<?php if($resumeMainModel): ?>
@@ -136,7 +136,7 @@
 												$description = isset($education['education_description']) ? unserialize($education['education_description']->field_value) : null;
 												if($description){
 													echo $description['value'];
-												} 
+												}
 											?>
 										</p>
 						      </div>
@@ -144,7 +144,7 @@
 						  </li>
 						<?php endforeach; ?>
 					</ul>
-				<?php endif; ?>				
+				<?php endif; ?>
 		  </div>
 		  <div class="box">
 				<?php if($resumeMainModel): ?>
@@ -212,7 +212,7 @@
 									$description = isset($award['awards_description']) ? unserialize($award['awards_description']->field_value) : null;
 									if($description){
 										echo $description['value'];
-									} 
+									}
 								?>
 							</div>
 						</div>
