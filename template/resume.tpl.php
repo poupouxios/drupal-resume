@@ -90,6 +90,7 @@
 					<h2>Experiences</h2>
 					<?php $dataSet = ResumeSubformModel::getMapper()->findAllBy("form_name","ResumeExperiencesModel","field_value",'desc');
 								$experiencesData = array_reverse(ResumeSubformHelper::convertDataSetInATwoDimensionalArray($dataSet));
+                                usort($experiencesData,['ResumeSubformMapper','sortByExperienceStartDate']);
 					?>
 					<ul class="timeline">
 					<?php foreach($experiencesData as $index => $experience): ?>
